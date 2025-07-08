@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Webhook Events</title>
+</head>
+<body>
+    <h1>Recent Events</h1>
+    <ul id="events"></ul>
+
+    <script>
+        async function fetchData() {
+            const res = await fetch('/data');
+            const data = await res.json();
+            const ul = document.getElementById('events');
+            ul.innerHTML = '';
+            data.forEach(e => {
+                let line = `${e.author} did ${e.action} at ${e.timestamp}`;
+                let li = document.createElement('li');
+                li.textContent = line;
+                ul.appendChild(li);
+            });
+        }
+
+        fetchData();
+        setInterval(fetchData, 15000);
+    </script>
+</body>
+</html>
